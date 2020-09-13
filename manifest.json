@@ -6,11 +6,11 @@
   "theme_color": "#FFDF00",
   "background_color": "#FFDF00",
   "icons": [{
-    "src": "homescreen.png",
+    "src": "./images/homescreen.png",
     "sizes": "192x192",
     "type": "image/png"
   }, {
-    "src": "homescreen-144.png",
+    "src": "./images/homescreen-144.png",
     "sizes": "144x144",
     "type": "image/png"
   }]
