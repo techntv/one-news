@@ -11,6 +11,9 @@ self.addEventListener('install', event => {
       './css/site.css',
       './data/latest.json',
       './data/data-1.json',
+      './data/data-2.json',
+      './data/data-3.json',
+      './data/data-4.json',
       './article.html',
       './index.html'
     ]))
