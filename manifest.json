@@ -1,7 +1,7 @@
 {
   "name": "One Times",
   "short_name": "One Times",
-  "start_url": "/index.html",
+  "start_url": "https://techntv.github.io/one-news/",
   "display": "standalone",
   "theme_color": "#FFDF00",
   "background_color": "#FFDF00",
