@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>One News</title>
+  <link rel="manifest" href="/manifest.json">
+</head>
+
+<body>
+  <header id="header">
+    <img src="./images/newspaper.svg" id="logo">
+    <h1>One Times</h1>
+    <h6>Latest News</h6>
+  </header>
+  <section id="latest"></section>
+  <hr />
+  <script async src="./js/main.js"></script>
+  <script>
+    //Register the service worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./sw.js').then(function (registration) {
+        console.log('Service Worker is working')
+      })
+    }
+  </script>
+</body>
+
+</html>
