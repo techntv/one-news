@@ -1,5 +1,5 @@
 const cacheName = 'latestNews-v1';
-
+const offlineUrl = 'offline-page.html'
 // Cache our known resources during install
 self.addEventListener('install', event => {
   event.waitUntil(
@@ -15,7 +15,8 @@ self.addEventListener('install', event => {
       './data/data-3.json',
       './data/data-4.json',
       './article.html',
-      './index.html'
+      './index.html',
+      offlineUrl
     ]))
   );
 });
@@ -44,7 +45,11 @@ self.addEventListener('fetch', function(event) {
 
           return response;
         }
-      );
+      ).catch(error => {
+        if(event.request.method === 'GET' && event.request.headers.get('accept').includes('text/html')) {
+          return caches.match(offlineUrl)
+        }
+      });
     })
   );
 });
