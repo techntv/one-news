@@ -1,3 +1,5 @@
+var offlineNotification = document.getElementById('offline');
+
 function retrieveData(url) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
@@ -44,5 +46,20 @@ function buildWebPage(result) {
   // Update the DOM with the data
   document.getElementById('latest').innerHTML = latestNews;
 }
+
+// Show an offline notification if the user if offline
+function showIndicator() {
+  offlineNotification.innerHTML = 'You are currently offline.';
+  offlineNotification.className = 'showOfflineNotification';
+}
+
+// Hide the offline notification when the user comes back online
+function hideIndicator() {
+  offlineNotification.className = 'hideOfflineNotification';
+}
+
+// Update the online status icon based on connectivity
+window.addEventListener('online',  hideIndicator);
+window.addEventListener('offline', showIndicator);
 
 loadLatestNews();
