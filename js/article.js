@@ -1,3 +1,5 @@
+var offlineNotification = document.getElementById('offline');
+
 function retrieveData(url) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
@@ -29,6 +31,27 @@ function loadArticle(){
   var articleUrl = './data/data-' + articleId + '.json';
   retrieveData(articleUrl);
 }
+
+// Build the web page with the resulting data
+function buildWebPage(result){
+  document.getElementById('article').innerHTML = result.description;
+  document.getElementById('article-title').innerHTML = result.title;
+}
+
+// Show an offline notification if the user if offline
+function showIndicator() {
+  offlineNotification.innerHTML = 'You are currently offline.';
+  offlineNotification.className = 'showOfflineNotification';
+}
+
+// Hide the offline notification when the user comes back online
+function hideIndicator() {
+  offlineNotification.className = 'hideOfflineNotification';
+}
+
+// Update the online status icon based on connectivity
+window.addEventListener('online',  hideIndicator);
+window.addEventListener('offline', showIndicator);
 
 // Build the web page with the resulting data
 function buildWebPage(result){

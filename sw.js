@@ -1,9 +1,9 @@
-const cacheName = 'latestNews-v1';
-
+const currentCache = 'latestNews-v1';
+const offlineUrl = './offline-page.html';
 // Cache our known resources during install
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(cacheName)
+    caches.open(currentCache)
     .then(cache => cache.addAll([
       './js/main.js',
       './js/article.js',
@@ -15,10 +15,23 @@ self.addEventListener('install', event => {
       './data/data-3.json',
       './data/data-4.json',
       './article.html',
-      './index.html'
+      './index.html',
+      offlineUrl
     ]))
   );
 });
+
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(cacheNames => Promise.all(
+      cacheNames.filter(cacheName => {
+        return cacheName !== currentCache
+      }).map(cacheName => caches.delete(cacheName))
+    ))
+  );
+});
+
+
 
 // Cache any new resources as they are fetched
 self.addEventListener('fetch', function(event) {
@@ -37,14 +50,20 @@ self.addEventListener('fetch', function(event) {
           }
 
           var responseToCache = response.clone();
-          caches.open(cacheName)
+          caches.open(currentCache)
           .then(function(cache) {
             cache.put(event.request, responseToCache);
           });
 
           return response;
         }
-      );
+      ).catch(error => {
+        if (event.request.method === 'GET' && event.request.headers.get('accept').includes('text/html')){
+          return caches.match(offlineUrl);
+        }
+      });
     })
-  );
+  ).catch(() => {
+      return caches.match(offlineUrl);
+  });
 });
